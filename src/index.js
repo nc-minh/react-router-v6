@@ -3,10 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Invoices from './pages/Invoices';
+import Expenses from './pages/Expenses';
+import NotFound from './pages/NotFound';
+import Invoice from './pages/Invoice';
+import NewInvoice from './pages/NewInvoice';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<App />}>
+          <Route path='/invoices' element={<Invoices />}>
+            <Route index element={<h2>Pls select an invoice!</h2>}/>
+            <Route path=':invoiceID' element={<Invoice />}/>
+            <Route path='new' element={<NewInvoice />}/>
+          </Route>
+          <Route path='/expenses' element={<Expenses />}/>
+          {/* no other routes match */}
+          <Route path='*' element={<NotFound />}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
